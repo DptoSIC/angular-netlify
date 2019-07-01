@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Partido } from '../modelo/partido';
+import { Suceso } from '../modelo/suceso';
 
 @Component({
   selector: 'app-partido-form',
@@ -14,16 +16,7 @@ export class PartidoFormComponent implements OnInit {
   constructor(activateRoute: ActivatedRoute) {
     const id = activateRoute.snapshot.params.id;
     const p = environment.partidos.find(x => x.id == id);
-    const sucesos: Suceso[] = p.sucesos;
-    const goles: Suceso[] = sucesos.filter(s => s.class === 'Gol');
-
-    this.partido = {
-      local: p.idLocal,
-      visitante: p.idVisitante,
-      golLocal: goles.filter(g => g.idParticipante === p.idLocal).length,
-      golVisitante: goles.filter(g => g.idParticipante === p.idVisitante).length,
-      fecha: p.timeStamp
-    };
+    this.partido = this.mapearPartido(p);
 
     //Podría hacerme los partidos dinámicamente cogiendo sólo el id
     //this.partido = {id: id, local:'A', visitante:'b'};
@@ -32,20 +25,44 @@ export class PartidoFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  mapearPartido(partidoApi){
+    const sucesos: Suceso[] = partidoApi.sucesos;
+    const goles: Suceso[] = sucesos.filter(s => s.class === 'Gol');
+
+    const partido = new PartidoImpl();
+    partido.local = partidoApi.idLocal;
+    partido.visitante = partidoApi.idVisitante;
+    partido.golLocal = goles.filter(g => g.idParticipante === partidoApi.idLocal).length;
+    partido.golVisitante = goles.filter(g => g.idParticipante === partidoApi.idVisitante).length;
+    partido.fecha = partidoApi.timeStamp;
+    partido.sucesos = partidoApi.sucesos;
+    
+    //partido.getResultado = () => partido.golLocal + " - " + partido.golVisitante;
+
+    return partido;
+  }
+
+  getTarjetas(partido: Partido){
+    return partido.sucesos.filter(s => s.class === 'Tarjeta');
+  }
 }
 
-
-
-export interface Partido {
+class PartidoImpl implements Partido {
   local: string;
   visitante: string;
   golLocal: number;
   golVisitante: number;
   fecha: number;
-  //getResultado: () => string;
-}
+  sucesos: Suceso[];
 
-export interface Suceso {
-  class: string;
-  idParticipante: string;
+  constructor() {
+  }
+
+  getResultado() {
+    return this.golLocal + " - " + this.golVisitante;
+  }
+
+  getTarjetas() {
+    return this.sucesos.filter(s => s.class === 'Tarjeta');
+  }
 }

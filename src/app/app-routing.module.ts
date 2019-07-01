@@ -4,7 +4,7 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     loadChildren: './home/home.module#HomeModule'
   },
   {

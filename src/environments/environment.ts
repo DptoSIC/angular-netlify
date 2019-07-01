@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  titulo: 'Datos Desarrollo',
+  titulo: 'Datos Deportivos (v 0.0.1)',
   partidos: [
     {id:1,
       idLocal:'WESHAM(ING)',idVisitante:'BRIGHT(ING)',idCompeticion:'ING-D1',
@@ -13,7 +13,7 @@ export const environment = {
     },
     {id:2,
       idLocal:'OSASUN(ESP)',idVisitante:'BARCAB(ESP)',idCompeticion:'ESP-D2',
-      sucesos:[{class:'Gol',idParticipante:'OSASUN(ESP)'},{class:'Gol',idParticipante:'OSASUN(ESP)'},{class:'Gol',idParticipante:'BARCAB(ESP)'},{class:'Gol',idParticipante:'BARCAB(ESP)'},{class:'Tarjeta',tipoTarjeta:1,idParticipante:'OSASUN(ESP)'}],
+      sucesos:[{class:'Gol',idParticipante:'OSASUN(ESP)'},{class:'Gol',idParticipante:'OSASUN(ESP)'},{class:'Gol',idParticipante:'BARCAB(ESP)'},{class:'Gol',idParticipante:'BARCAB(ESP)'}],
       timeStamp:1508526000000
     },
     {id:3,
