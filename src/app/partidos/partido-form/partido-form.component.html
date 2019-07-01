@@ -1,3 +1,12 @@
-<p>
-  {{ partido | json }}
-</p>
+<form>
+  <div class="form-group" [ngClass]="{'text-danger': partido.golLocal < 1}">
+    <label for="local">Local</label>
+    <input type="text" class="form-control" id="local" placeholder="Equipo local" [(ngModel)]="partido.local" [ngModelOptions]="{standalone: true}">
+  </div>
+  <div  [ngClass]="{'form-group': true, 'text-danger': partido.golVisitante < 1}">
+    <label for="visitante">Visitante</label>
+    <input (click)="alertClick()" type="text" class="form-control" id="visitante" placeholder="Equipo visitante" [(ngModel)]="partido.visitante" [ngModelOptions]="{standalone: true}">
+  </div>
+</form>
+
+<pre>{{ partido | json }}</pre>

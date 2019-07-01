@@ -18,7 +18,7 @@ export const environment = {
     },
     {id:3,
       idLocal:'SETIEN(FRA)',idVisitante:'MONTPE(FRA)',idCompeticion:'FRA-D1',
-    sucesos:[{class:'Gol',idParticipante:'MONTPE(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:1,idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'}],
+    sucesos:[{class:'Gol',idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:1,idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'}],
     timeStamp:1508525100000}
   ]
 };
