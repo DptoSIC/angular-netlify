@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Suceso } from '../modelo/suceso';
+import { Suceso } from '../modelo/partido';
 
 @Component({
   selector: 'app-tarjetas',
@@ -7,8 +7,9 @@ import { Suceso } from '../modelo/suceso';
   styles: []
 })
 export class TarjetasComponent implements OnInit {
+
   @Input() sucesos: Suceso[];
-  @Output() public tarjetero = new EventEmitter<Suceso>();
+  @Output() tarjetero = new EventEmitter<Suceso>();
   sucesoSeleccionado: Suceso;
 
   constructor() { }
@@ -16,16 +17,16 @@ export class TarjetasComponent implements OnInit {
   ngOnInit() {
   }
 
-  seleccionarTarjeta(event: MouseEvent, suceso: Suceso){
+  seleccionarTarjeta(event: MouseEvent, suceso: Suceso) {
     this.sucesoSeleccionado = suceso;
     console.log('Seleccionada tarjeta: ' + JSON.stringify(suceso));
-    if(event.ctrlKey) {
+    if (event.ctrlKey) {
       this.quitarTarjeta();
     }
   }
 
-  quitarTarjeta(){
-    if(this.sucesoSeleccionado){
+  quitarTarjeta() {
+    if (this.sucesoSeleccionado) {
       // this.sucesos.splice(this.sucesos.indexOf(this.sucesoSeleccionado), 1);
       this.tarjetero.emit(this.sucesoSeleccionado);
     } else {
@@ -33,11 +34,12 @@ export class TarjetasComponent implements OnInit {
     }
   }
 
-  getTarjetas(){
+  getTarjetas() {
     return this.sucesos.filter(s => s.class === 'Tarjeta');
   }
 
   getClaseTarjeta(tarjeta){
     return (tarjeta.tipoTarjeta === 1) ? 'bg-danger text-white' : 'bg-warning';
   }
+
 }

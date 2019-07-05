@@ -1,18 +1,19 @@
-<div class="text-center font-weight-bold">
-  <span>{{ partido.fecha | date: 'full' : 'GMT+1' }}</span>
-</div>
+<div *ngIf="partido">
 <form class="my-2">
   <div class="form-row">
-    <div class="col"><!-- [ngClass]="{'text-danger': partido.golesLocal() < 1}">-->
+    <div class="col">
       <input id="local" type="text" class="form-control text-right" placeholder="Equipo local" [(ngModel)]="partido.local" [ngModelOptions]="{standalone: true}">
     </div>
     <div class="col-1">
       <input type="text" class="form-control-plaintext text-center font-weight-bold" id="resultado" [value]="partido.getResultado()" readonly>
     </div>
-    <div class="col"><!--[ngClass]="{'form-group col-5': true, 'text-danger': partido.golesVisitante() < 1}">-->
+    <div class="col">
       <input (click)="funcionClick()" id="visitante" type="text" class="form-control" placeholder="Equipo visitante" [(ngModel)]="partido.visitante" [ngModelOptions]="{standalone: true}">
     </div>
   </div>
 </form>
+
 <app-tarjetas [sucesos]="partido.sucesos" (tarjetero)="onTarjetero($event)"></app-tarjetas>
+
 <pre>{{ partido | json }}</pre>
+</div>

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  titulo: 'Datos Deportivos (v 0.0.1)',
+  titulo: 'Datos Desarrollo',
   partidos: [
     {id:1,
       idLocal:'WESHAM(ING)',idVisitante:'BRIGHT(ING)',idCompeticion:'ING-D1',
@@ -20,7 +20,8 @@ export const environment = {
       idLocal:'SETIEN(FRA)',idVisitante:'MONTPE(FRA)',idCompeticion:'FRA-D1',
     sucesos:[{class:'Gol',idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:1,idParticipante:'SETIEN(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'},{class:'Tarjeta',tipoTarjeta:2,idParticipante:'MONTPE(FRA)'}],
     timeStamp:1508525100000}
-  ]
+  ],
+  //partidosAPI: []
 };
 
 /*

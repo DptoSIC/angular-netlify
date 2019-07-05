@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Partido } from '../modelo/partido';
+import { GestorPartidosService } from '../servicio/gestor-partidos.service';
 
 @Component({
   selector: 'app-partidos',
@@ -7,11 +9,15 @@ import { environment } from 'src/environments/environment';
   styles: []
 })
 export class PartidosComponent implements OnInit {
-  partidos = environment.partidos;
+  partidos: Partido[];// = environment.partidosAPI;
 
-  constructor() { }
+  constructor(gestorPartidos: GestorPartidosService) {
+    this.partidos = gestorPartidos.getPartidos();
+  }
 
   ngOnInit() {
   }
 
 }
+
+

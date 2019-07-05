@@ -1,13 +1,11 @@
 <section *ngIf="getTarjetas().length > 0; else resumen">
   <div class="text-center">
-    <span *ngFor="let tarjeta of getTarjetas()" class="mr-3 p-0 px-1" [ngClass]="getClaseTarjeta(tarjeta)"
-      (click)="seleccionarTarjeta($event, tarjeta)">
-      <!--{ 'bg-danger text-white': suceso.tipoTarjeta == 1, 'bg-warning': suceso.tipoTarjeta == 2 }">-->
-        {{ tarjeta.idParticipante.slice(0,3) | lowercase }}
+    <span *ngFor="let suceso of getTarjetas()" class="mr-3 p-0 px-1"
+      [ngClass]="getClaseTarjeta(suceso)" (click)="seleccionarTarjeta($event, suceso)">
+        {{ suceso.idParticipante.slice(0,3) | lowercase }}
     </span>
   </div>
 </section>
 <ng-template #resumen>
     <div class="mx-auto text-center">El partido finalizó sin sanciones</div>
 </ng-template>
-
