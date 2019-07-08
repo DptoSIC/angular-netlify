@@ -16,6 +16,10 @@ const routes: Routes = [
       {
       path: ':id',
       component: PartidoFormComponent
+      },
+      {
+      path: ':id/tarjetas/:idTarjeta',
+      component: ResumenComponent
       }
     ]
   }

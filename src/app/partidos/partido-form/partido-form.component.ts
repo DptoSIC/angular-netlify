@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { Partido, Suceso } from '../modelo/partido';
 import { GestorPartidosService } from '../servicio/gestor-partidos.service';
+import { Observable } from 'rxjs';
+import { tap, share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-partido-form',
@@ -10,28 +11,47 @@ import { GestorPartidosService } from '../servicio/gestor-partidos.service';
   styles: []
 })
 export class PartidoFormComponent implements OnInit {
-  partido: Partido;
+  @Input() partido: Partido;
   funcionClick = () => this.partido.local += '*';
+  resumido: boolean = false;
+  partidoObservable$: Observable<Partido>;
 
-  constructor(activateRoute: ActivatedRoute, private gestorPartidos: GestorPartidosService) {
+  constructor(private activateRoute: ActivatedRoute, private gestorPartidos: GestorPartidosService) {
     /*const id = activateRoute.snapshot.params.id;
     this.setPartidoPorId(id);*/
-
-    activateRoute.params.subscribe(params => this.setPartidoPorId(params['id']));
   }
 
   ngOnInit() {
+    this.resumido = this.partido != null;
+    if (!this.resumido) {
+      this.activateRoute.params.subscribe(params => this.setPartidoPorId(params['id']));
+    }
   }
 
   setPartidoPorId(id) {
-    this.partido = this.gestorPartidos.getPartidos().find(x => x.id == id);
+    // this.partido = this.gestorPartidos.getPartidos().find(x => x.id == id);
     // this.partido = this.mapearPartido(p);
+    // this.gestorPartidos.getPartidoPorId(id).then(p => this.partido = p);
+    this.partidoObservable$ = this.gestorPartidos.getPartidoObservable(id).pipe(
+      tap((p) => console.log('Llega partido: ', p)),
+      tap(p => this.partido = p),
+      share()
+    );
   }
 
   onTarjetero(tarjeta: Suceso) {
     const sucs = this.partido.sucesos;
-    sucs.splice(sucs.indexOf(tarjeta), 1);
+    // sucs.splice(sucs.indexOf(tarjeta), 1);
+    this.gestorPartidos.borrarTarjeta(tarjeta);
     console.log('Eliminada tarjeta: ' + JSON.stringify(tarjeta));
   }
 
+  addTarjeta() {
+    //this.gestorPartidos.addTarjeta(this.partido, this.partidoObservable);
+      //.toPromise().then(() => this.partidoObservable.subscribe(() => console.log('Actualizando partidoObservable...')));
+    //this.partidoObservable.subscribe(() => console.log('Actualizando partidoObservable...'));
+
+    this.gestorPartidos.addTarjeta(this.partido)
+      .subscribe(r => this.partidoObservable$.subscribe(() => console.log('Actualizando partidoObservable...')));
+  }
 }

@@ -10,6 +10,11 @@ export interface Partido {
 }
 
 export interface Suceso {
-  class: string;
+  tipo: string;
   idParticipante: string;
+  url: string;
+}
+
+export interface Tarjeta extends Suceso {
+  tipoTarjeta: string;
 }

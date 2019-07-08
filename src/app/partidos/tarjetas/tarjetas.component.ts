@@ -35,11 +35,18 @@ export class TarjetasComponent implements OnInit {
   }
 
   getTarjetas() {
-    return this.sucesos.filter(s => s.class === 'Tarjeta');
+    return this.sucesos.filter(s => s.tipo === 'Tarjeta');
   }
 
   getClaseTarjeta(tarjeta){
-    return (tarjeta.tipoTarjeta === 1) ? 'bg-danger text-white' : 'bg-warning';
+    return (tarjeta.tipoTarjeta === 'ROJA') ? 'bg-danger text-white' : 'bg-warning';
   }
 
+  // Para el ruoterLink desde la Tarjeta
+  calcularId(url) {
+    return url.slice(url.lastIndexOf('/') + 1, url.length);
+  }
+  calcularLink(suceso: Suceso){
+    return 'tarjetas/' + this.calcularId(suceso.url);
+  }
 }

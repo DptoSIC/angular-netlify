@@ -1,10 +1,13 @@
 <div class="d-flex justify-content-end mb-3">
   <a class="btn btn-dark mr-3 p-0 px-1" routerLink="resumen">Resumen</a>
-  <a class="btn btn-dark mr-3 p-0 px-1" routerLink="1">Partido 1</a>
-  <a class="btn btn-dark mr-3 p-0 px-1" routerLink="2">Partido 2</a>
-  <a class="btn btn-dark mr-3 p-0 px-1" routerLink="3">Partido 3</a>
+  <a class="btn btn-dark mr-3 p-0 px-1" routerLink="16">Partido 1</a>
+  <a class="btn btn-dark mr-3 p-0 px-1" routerLink="20">Partido 2</a>
+  <a class="btn btn-dark mr-3 p-0 px-1" routerLink="22/tarjetas/7">Partido 3</a>
 </div>
 <hr>
 <router-outlet></router-outlet>
 <hr>
+<div *ngIf="partidos && partidos.length > 0">
+  <app-partido-form *ngFor="let partido of partidos" [partido]="partido"></app-partido-form>
+</div>
 <pre>{{ partidos | json }}</pre>

@@ -1,7 +1,7 @@
 <section *ngIf="getTarjetas().length > 0; else resumen">
   <div class="text-center">
     <span *ngFor="let suceso of getTarjetas()" class="mr-3 p-0 px-1"
-      [ngClass]="getClaseTarjeta(suceso)" (click)="seleccionarTarjeta($event, suceso)">
+      [ngClass]="getClaseTarjeta(suceso)" (click)="seleccionarTarjeta($event, suceso)"><!-- [routerLink]="calcularLink(suceso)"  -->
         {{ suceso.idParticipante.slice(0,3) | lowercase }}
     </span>
   </div>

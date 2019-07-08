@@ -1,19 +1,31 @@
 <div *ngIf="partido">
-<form class="my-2">
-  <div class="form-row">
-    <div class="col">
-      <input id="local" type="text" class="form-control text-right" placeholder="Equipo local" [(ngModel)]="partido.local" [ngModelOptions]="{standalone: true}">
-    </div>
-    <div class="col-1">
-      <input type="text" class="form-control-plaintext text-center font-weight-bold" id="resultado" [value]="partido.getResultado()" readonly>
-    </div>
-    <div class="col">
-      <input (click)="funcionClick()" id="visitante" type="text" class="form-control" placeholder="Equipo visitante" [(ngModel)]="partido.visitante" [ngModelOptions]="{standalone: true}">
-    </div>
+  <div class="text-center font-weight-bold">
+    <span>{{ partido.fecha | date: 'full' : 'GMT+1' }}</span>
+    <ng-template #idPartido>
+        <div class="nota-id bg-secondary text-center col-sm-1 col-2 text-white font-weight-bold mt-n3 mb-3">{{ partido.id }} </div>
+    </ng-template>
   </div>
-</form>
-
-<app-tarjetas [sucesos]="partido.sucesos" (tarjetero)="onTarjetero($event)"></app-tarjetas>
-
+  <div class="badge badge-pill badge-warning float-right" (click)="addTarjeta()">Añadir tarjeta</div>
+  <div class="clearfix"></div>
+  <form class="my-2">
+    <div class="form-row">
+      <div class="col">
+        <input id="local" type="text" class="form-control text-right" placeholder="Equipo local"
+          [(ngModel)]="partido.local" [ngModelOptions]="{standalone: true}" [readonly]="resumido">
+      </div>
+      <div class="col-1">
+        <input type="text" class="form-control-plaintext text-center font-weight-bold" id="resultado" [value]="partido.getResultado()" readonly>
+      </div>
+      <div class="col">
+        <input (click)="funcionClick()" id="visitante" type="text" class="form-control" placeholder="Equipo visitante"
+          [(ngModel)]="partido.visitante" [ngModelOptions]="{standalone: true}" [readonly]="resumido">
+      </div>
+    </div>
+  </form>
+  <div *ngIf="!resumido; else idPartido">
+    <app-tarjetas [sucesos]="partido.sucesos" (tarjetero)="onTarjetero($event)"></app-tarjetas>
+    <!--<pre>{{ partidoObservable | async | json }}</pre>
+    <pre>{{ partido | json }}</pre>-->
+  </div>
+</div><pre class="text-success"> {{ partidoObservable$ | async | json }}</pre>
 <pre>{{ partido | json }}</pre>
-</div>
