@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GestorPartidosService implements GestorPartidos{
-  host = 'http://localhost:8081';
+  host = 'https://datos-deportivos-api.herokuapp.com/api';
   url = `${this.host}/partidos?page=0&size=5`;
   partidos: Partido[] = [];
   partidos$: Observable<Partido[]>;
@@ -49,16 +49,17 @@ export class GestorPartidosService implements GestorPartidos{
     const url = partidoDesdeAPI._links.self.href;
     // console.log(url);
     pe.id = url.slice(url.lastIndexOf('/') + 1, url.length);
+    console.log(pe)
     const sucesos: Suceso[] = [];
-    this.http.get<any>(`${this.host}/sucesos/search/sucesos-partido?partido=${this.host}/partidos/` + pe.id)
+    this.http.get<any>(partidoDesdeAPI._links.sucesos.href)//`${this.host}/sucesos/search/sucesos-partido?partido=${this.host}/partidos/` + pe.id)
       .subscribe(r => {
         let arraySucesos = r._embedded.goles;
         if (arraySucesos) {
-          sucesos.push(...this.mapearSucesos(arraySucesos));
+          sucesos.push(...this.mapearSucesos(arraySucesos, 'Gol'));
         }
         arraySucesos = r._embedded.tarjetas;
         if (arraySucesos) {
-          sucesos.push(...this.mapearSucesos(arraySucesos));
+          sucesos.push(...this.mapearSucesos(arraySucesos, 'Tarjeta'));
         }
       });
     pe.sucesos = sucesos;
@@ -70,14 +71,14 @@ export class GestorPartidosService implements GestorPartidos{
     const partido = new PartidoImpl();
     partido.local = partidoApi.idLocal;
     partido.visitante = partidoApi.idVisitante;
-    partido.fecha = partidoApi.timeStamp;
-    partido.sucesos = partidoApi.sucesos;
+    partido.fecha = partidoApi.timestamp;
+    //partido.sucesos = partidoApi.sucesos;
 
     return partido;
   }
 
-  mapearSuceso(sucesoAPI): Suceso {
-    const suceso: Suceso = {  tipo: sucesoAPI.tipo,
+  mapearSuceso(sucesoAPI, tipo?: string): Suceso {
+    const suceso: Suceso = {  tipo: tipo,//sucesoAPI.tipo,
               idParticipante: sucesoAPI.idParticipante,
               url: sucesoAPI._links.self.href };
     if (suceso.tipo === 'Tarjeta') {
@@ -88,9 +89,9 @@ export class GestorPartidosService implements GestorPartidos{
     return suceso;
   }
 
-  mapearSucesos(sucesosAPI: any[]): Suceso[] {
+  mapearSucesos(sucesosAPI: any[], tipo?: string): Suceso[] {
     const sucesos: Suceso[] = [];
-    sucesosAPI.forEach(s => sucesos.push(this.mapearSuceso(s)));
+    sucesosAPI.forEach(s => sucesos.push(this.mapearSuceso(s, tipo)));
     return sucesos;
   }
 
